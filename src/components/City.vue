@@ -5,13 +5,13 @@
             <div class="cogs" :style="{ backgroundPosition: currentSlideId <= 1 ? `top` : `bottom` }"></div>
         </div>
         <div class="tapeOrnament1"
-            :style="{ background: currentSlideId <= 1 ? `url('/fakeYH/img/city/tapeA_ornament1.png') no-repeat` : `url('/fakeYH/img/city/tapeB_ornament1.png') no-repeat` }">
+            :style="{ background: currentSlideId <= 1 ? `url('/img/city/tapeA_ornament1.png') no-repeat` : `url('/img/city/tapeB_ornament1.png') no-repeat` }">
         </div>
         <div class="tapeOrnament2"
-            :style="{ background: currentSlideId <= 1 ? `url('/fakeYH/img/city/tapeA_ornament2.png') no-repeat` : `url('/fakeYH/img/city/tapeB_ornament2.png') no-repeat` }">
+            :style="{ background: currentSlideId <= 1 ? `url('/img/city/tapeA_ornament2.png') no-repeat` : `url('/img/city/tapeB_ornament2.png') no-repeat` }">
         </div>
         <div class="cityNum"
-            :style="{ background: `url('/fakeYH/img/city/${currentSlide.number}') no-repeat`, opacity: isOpacity ? 1 : 0 }">
+            :style="{ background: `url('/img/city/${currentSlide.number}') no-repeat`, opacity: isOpacity ? 1 : 0 }">
         </div>
         <div class="slideContent">
             <div class="citySlide">
@@ -32,7 +32,7 @@
                 </div>
             </div>
             <div class="slideText"
-                :style="{ background: `url('/fakeYH/img/city/${currentSlide.title}') no-repeat`, opacity: isOpacity ? 1 : 0 }">
+                :style="{ background: `url('/img/city/${currentSlide.title}') no-repeat`, opacity: isOpacity ? 1 : 0 }">
             </div>
             <div class="slideSignal">
                 <div v-for="(n, index) in slideSignal" :key="index"
@@ -153,7 +153,7 @@ onMounted(() => {
 
     .tape {
         margin: 1.4rem 0 0 12rem;
-        background: url("/fakeYH/img/city/tape.png") no-repeat;
+        background: url("/img/city/tape.png") no-repeat;
         width: 50rem;
         height: 30.2rem;
         background-size: cover;
@@ -162,7 +162,7 @@ onMounted(() => {
 
         .cogs {
             position: absolute;
-            background: url("/fakeYH/img/city/tapeAxle.png");
+            background: url("/img/city/tapeAxle.png");
             animation: rotate 4s linear infinite;
             width: 8rem;
             height: 8rem;
@@ -226,12 +226,12 @@ onMounted(() => {
 
 
             .prev {
-                background: url('/fakeYH/img/city/citySlidePrev.png') no-repeat;
+                background: url('/img/city/citySlidePrev.png') no-repeat;
                 background-position: left top;
             }
 
             .next {
-                background: url('/fakeYH/img/city/citySlideNext.png') no-repeat;
+                background: url('/img/city/citySlideNext.png') no-repeat;
                 background-position: left top;
             }
 
@@ -268,7 +268,7 @@ onMounted(() => {
             margin-top: .4rem;
             width: 51rem;
             height: 4rem;
-            // background: url("/fakeYH/img/city/citySlide1Tit.png") no-repeat;
+            // background: url("/img/city/citySlide1Tit.png") no-repeat;
             background-size: auto 100% !important;
             background-position: left top !important;
             transition: opacity .1s ease-in-out;
@@ -292,7 +292,7 @@ onMounted(() => {
         position: absolute;
         right: 1rem;
         bottom: 3rem;
-        background: url('/fakeYH/img/city/guide_intel.png') no-repeat;
+        background: url('/img/city/guide_intel.png') no-repeat;
         background-size: auto 100%;
         width: 10rem;
         height: 4rem;
@@ -302,7 +302,7 @@ onMounted(() => {
         position: absolute;
         width: 1rem;
         height: 12rem;
-        background: url('/fakeYH/img/city/guide_nextPage.png') no-repeat;
+        background: url('/img/city/guide_nextPage.png') no-repeat;
         background-size: 100% auto;
         right: 1rem;
         top: 40%;
@@ -319,12 +319,12 @@ onMounted(() => {
             height: inherit;
 
             .b1 {
-                background: url('/fakeYH/img/city/wavyLline2.png');
+                background: url('/img/city/wavyLline2.png');
                 top: 1rem
             }
 
             .b2 {
-                background: url('/fakeYH/img/city/wavyLline1.png');
+                background: url('/img/city/wavyLline1.png');
                 top: 0;
                 height: 4rem !important;
 
