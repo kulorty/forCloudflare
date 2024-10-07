@@ -14,7 +14,7 @@
 </template>
 
 <script setup>
-import Loading from "./components/loading.vue";
+import Loading from "./components/Loading.vue";
 import Header from "./components/Header.vue"
 import Home from "./components/Home.vue"
 import Character from "./components/Character.vue";
