@@ -5,13 +5,13 @@
             <div class="cogs" :style="{ backgroundPosition: currentSlideId <= 1 ? `top` : `bottom` }"></div>
         </div>
         <div class="tapeOrnament1"
-            :style="{ background: currentSlideId <= 1 ? `url('/img/city/tapeA_ornament1.png') no-repeat` : `url('/img/city/tapeB_ornament1.png') no-repeat` }">
+            :style="{ background: currentSlideId <= 1 ? `url('/fakeYH/img/city/tapeA_ornament1.png') no-repeat` : `url('/fakeYH/img/city/tapeB_ornament1.png') no-repeat` }">
         </div>
         <div class="tapeOrnament2"
-            :style="{ background: currentSlideId <= 1 ? `url('/img/city/tapeA_ornament2.png') no-repeat` : `url('/img/city/tapeB_ornament2.png') no-repeat` }">
+            :style="{ background: currentSlideId <= 1 ? `url('/fakeYH/img/city/tapeA_ornament2.png') no-repeat` : `url('/fakeYH/img/city/tapeB_ornament2.png') no-repeat` }">
         </div>
         <div class="cityNum"
-            :style="{ background: `url('/img/city/${currentSlide.number}') no-repeat`, opacity: isOpacity ? 1 : 0 }">
+            :style="{ background: `url('/fakeYH/img/city/${currentSlide.number}') no-repeat`, opacity: isOpacity ? 1 : 0 }">
         </div>
         <div class="slideContent">
             <div class="citySlide">
@@ -32,7 +32,7 @@
                 </div>
             </div>
             <div class="slideText"
-                :style="{ background: `url('/img/city/${currentSlide.title}') no-repeat`, opacity: isOpacity ? 1 : 0 }">
+                :style="{ background: `url('/fakeYH/img/city/${currentSlide.title}') no-repeat`, opacity: isOpacity ? 1 : 0 }">
             </div>
             <div class="slideSignal">
                 <div v-for="(n, index) in slideSignal" :key="index"
@@ -40,14 +40,22 @@
                     @click="toggleSlide(index)">{{ n }}</div>
             </div>
         </div>
-
+        <div class="guide"></div>
+        <div class="nextPage"></div>
+        <div class="bottom">
+            <div class="bBox">
+                <div class="b1"></div>
+                <div class="b2"></div>
+            </div>
+        </div>
     </div>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted, inject } from 'vue';
+import gsap from 'gsap';
 
-const slideSignal = Array(5).fill(""), currentSlideId = ref(0), isOpacity = ref(true)
+const slideSignal = Array(5).fill(""), currentSlideId = ref(0), isOpacity = ref(true), emitter = inject("emitter")
 const cityContents = ref({
     0: {
         title: "citySlide1Tit.png",
@@ -104,6 +112,20 @@ const next = () => {
         currentSlideId.value = 0
     }
 }
+
+onMounted(() => {
+    emitter.on("toIndex", val => {
+        if (val == 2) {
+            gsap.fromTo(".tape", { x: -100 + "vw", }, { keyframes: [{ x: 80, duration: .3 }, { x: 0, duration: .1 }, { x: 80, duration: .1 }, { x: 0, duration: .1 }] })
+            gsap.fromTo(".guide", { x: 100 + "vw", }, { x: 0, duration: .6, delay: 1.2 })
+            gsap.fromTo(".guide", { x: 100 + "vw", }, { x: 0, duration: .6, delay: 1.2 })
+            gsap.fromTo(".slideContent", { x: 100 + "vw", }, { x: 0, duration: .6, delay: 1.1 })
+            gsap.fromTo(".cityNum", { x: 100 + "vw", }, { x: 0, duration: .6, delay: 1.1 })
+            gsap.to(".b1", { keyframes: [{ x: -30 + "rem", opacity: 1, duration: 1 }, { x: -30 + "rem", opacity: 0 }] })
+            gsap.to(".b2", { keyframes: [{ x: -10 + "rem", opacity: 1, duration: 1 }, { x: -10 + "rem", opacity: 0 }] })
+        }
+    })
+})
 </script>
 
 <style scoped lang="scss">
@@ -121,15 +143,17 @@ const next = () => {
 .city {
     position: relative;
     width: 100vw;
+    // min-height: 700px;
+    min-width: 1200px;
     background: url("/img/city/page_city.jpg") no-repeat;
-    background-size: 132% auto;
+    background-size: 100% auto;
     background-position: center;
     height: calc(100vh - 4.8rem);
     transition: opacity .4s ease-in-out;
 
     .tape {
         margin: 1.4rem 0 0 12rem;
-        background: url("/img/city/tape.png") no-repeat;
+        background: url("/fakeYH/img/city/tape.png") no-repeat;
         width: 50rem;
         height: 30.2rem;
         background-size: cover;
@@ -138,7 +162,7 @@ const next = () => {
 
         .cogs {
             position: absolute;
-            background: url("/img/city/tapeAxle.png");
+            background: url("/fakeYH/img/city/tapeAxle.png");
             animation: rotate 4s linear infinite;
             width: 8rem;
             height: 8rem;
@@ -202,12 +226,12 @@ const next = () => {
 
 
             .prev {
-                background: url('/img/city/citySlidePrev.png') no-repeat;
+                background: url('/fakeYH/img/city/citySlidePrev.png') no-repeat;
                 background-position: left top;
             }
 
             .next {
-                background: url('/img/city/citySlideNext.png') no-repeat;
+                background: url('/fakeYH/img/city/citySlideNext.png') no-repeat;
                 background-position: left top;
             }
 
@@ -243,8 +267,8 @@ const next = () => {
         .slideText {
             margin-top: .4rem;
             width: 51rem;
-            height: 3.6rem;
-            // background: url("/img/city/citySlide1Tit.png") no-repeat;
+            height: 4rem;
+            // background: url("/fakeYH/img/city/citySlide1Tit.png") no-repeat;
             background-size: auto 100% !important;
             background-position: left top !important;
             transition: opacity .1s ease-in-out;
@@ -262,6 +286,60 @@ const next = () => {
                 cursor: pointer !important;
             }
         }
+    }
+
+    .guide {
+        position: absolute;
+        right: 1rem;
+        bottom: 3rem;
+        background: url('/fakeYH/img/city/guide_intel.png') no-repeat;
+        background-size: auto 100%;
+        width: 10rem;
+        height: 4rem;
+    }
+
+    .nextPage {
+        position: absolute;
+        width: 1rem;
+        height: 12rem;
+        background: url('/fakeYH/img/city/guide_nextPage.png') no-repeat;
+        background-size: 100% auto;
+        right: 1rem;
+        top: 40%;
+    }
+
+    .bottom {
+        position: absolute;
+        bottom: 0rem;
+        width: 100vw;
+        height: 6rem;
+
+        .bBox {
+            position: relative;
+            height: inherit;
+
+            .b1 {
+                background: url('/fakeYH/img/city/wavyLline2.png');
+                top: 1rem
+            }
+
+            .b2 {
+                background: url('/fakeYH/img/city/wavyLline1.png');
+                top: 0;
+                height: 4rem !important;
+
+            }
+
+            .b1,
+            .b2 {
+                width: 200vw;
+                height: 5rem;
+                position: absolute;
+                background-size: auto 100%;
+
+            }
+        }
+
     }
 }
 </style>

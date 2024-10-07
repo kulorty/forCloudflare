@@ -4,15 +4,10 @@ import App from "./App.vue";
 import mitt from "mitt";
 const emitter = mitt();
 
-function setRemUnit() {
-	const baseWidth = 1512;
-	const baseFontSize = 16;
-	const scale = document.documentElement.clientWidth / baseWidth;
-	document.documentElement.style.fontSize = scale * baseFontSize + "px";
-}
-
-window.addEventListener("resize", setRemUnit);
-
-setRemUnit();
+setInterval(() => {
+	if (window.devicePixelRatio != 1.25) {
+		document.documentElement.style.fontSize = 20 / window.devicePixelRatio + "px";
+	}
+}, 500);
 
 createApp(App).provide("emitter", emitter).mount("#app");

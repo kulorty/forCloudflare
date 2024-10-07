@@ -20,6 +20,7 @@ const footerLefts = Array(7).fill("")
 footer {
     z-index: 7;
     width: 100%;
+    min-width: 1200px;
     height: 4.8rem;
     background: rgb(29, 29, 29);
     display: flex;

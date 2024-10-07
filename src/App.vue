@@ -2,29 +2,28 @@
   <Loading v-if="!isLoaded" :style="{ opacity: isOpacity ? 0 : 1 }" style="transition: opacity .8s ease-in-out;">
   </Loading>
   <Header />
-  <div class="container" @wheel="nextPage" @click="playMusic" :style="{ transform: `translateX(${transValue}vw) ` }">
-    <Home :style="{ opacity: opacityIndex === 0 ? 1 : 0 }" />
-    <Character :style="{ opacity: opacityIndex === 1 ? 1 : 0 }" />
-    <City :style="{ opacity: opacityIndex === 2 ? 1 : 0 }" />
+  <div class="container" @wheel="nextPage" @click="playMusic">
+    <Home :style="{ opacity: opacityIndex === 0 ? 1 : 0 }" v-show="showIndex === 0" />
+    <Character :style="{ opacity: opacityIndex === 1 ? 1 : 0 }" v-show="showIndex === 1" />
+    <City :style="{ opacity: opacityIndex === 2 ? 1 : 0 }" v-show="showIndex === 2" />
 
   </div>
-  <div class="sub" v-show="subShow">
+  <div class="sub" :style="{ display: opacityIndex === 0 ? `none` : `block` }">
     <div class="subBtn"></div>
   </div>
 </template>
 
 <script setup>
-import Loading from "./components/Loading.vue"
+import Loading from "./components/loading.vue";
 import Header from "./components/Header.vue"
 import Home from "./components/Home.vue"
 import Character from "./components/Character.vue";
 import City from "./components/City.vue";
-
 import gsap from "gsap";
 import { inject, ref, onMounted } from "vue";
 
 const emitter = inject("emitter"), subShow = ref(false)
-const direction = ref(""), isLoaded = ref(false), isOpacity = ref(false), transValue = ref(0), isTransed = ref(false)
+const direction = ref(""), isLoaded = ref(false), isOpacity = ref(false), transValue = ref(0), showIndex = ref(0)
 const opacityIndex = ref(0)
 
 const nextPage = (e) => {
@@ -60,8 +59,11 @@ onMounted(() => {
     }, 4000)
   };
   emitter.on("toIndex", val => {
-    transValue.value = val * (-100)
-    opacityIndex.value = val
+    showIndex.value = val
+    setTimeout(() => {
+      opacityIndex.value = val
+    }, 10)
+
     if (val > 0) {
       setTimeout(() => {
         subShow.value = true
@@ -70,10 +72,13 @@ onMounted(() => {
     if (transValue.value == 0) {
       subShow.value = false
     }
-    gsap.fromTo(".sub", { marginLeft: -6 + "rem" }, { keyframes: [{ marginLeft: -16 + "rem", duration: .2 }, { marginLeft: -6 + "rem", duration: .4 }] })
+    gsap.fromTo(".sub", { marginLeft: -6 + "rem" }, { keyframes: [{ marginLeft: -16 + "rem", duration: .5 }, { marginLeft: -6 + "rem", duration: .5, delay: 1 }] })
   })
   emitter.on("subshow", val => {
-    subShow.value = val
+    if (val) {
+      subShow.value = val
+    }
+
   })
 })
 
@@ -84,7 +89,7 @@ onMounted(() => {
   height: inherit;
   position: relative;
   display: flex;
-  width: 500vw;
+  // width: 500vw;
 }
 
 .sub {

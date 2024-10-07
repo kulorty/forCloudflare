@@ -59,6 +59,7 @@ onMounted(() => {
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    min-width: 1200px;
     background: rgb(29, 29, 29);
     position: relative;
     width: 100vw;
@@ -99,6 +100,7 @@ onMounted(() => {
             left: 1rem;
             bottom: .8rem;
             height: 3.8rem;
+            z-index: 2;
 
             img {
                 height: inherit;

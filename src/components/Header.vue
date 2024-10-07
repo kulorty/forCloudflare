@@ -41,7 +41,7 @@ import { ref, watch, nextTick, onMounted, onUnmounted, inject } from 'vue';
 
 const isPlaying = ref(false), items = Array(5).fill(''), shadows = Array(4).fill(''), shadows1 = Array(4).fill(''), activeIndex = ref(0)
 const leftValue = ref(0), animate1 = ref(true), animate2 = ref(true), emitter = inject("emitter"), isChange = ref(false), isplay = ref(false)
-const bgMusic = new Audio("/yh_gw_bgm.mp3")
+const bgMusic = new Audio("/fakeYH/yh_gw_bgm.mp3")
 
 const setActive = (val) => {
     activeIndex.value = val
@@ -130,6 +130,7 @@ header {
     height: 4.8rem;
     position: relative;
     z-index: 10;
+    min-width: 1200px;
     width: 100vw;
 
     .main {
