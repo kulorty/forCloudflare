@@ -1,14 +1,14 @@
 <template>
     <div class="character">
-        <video v-for="(n, index) in videoList" :key="index" :src="`/fakeYH/img/character/yh_bgv_${n}.mp4`" autoplay loop
-            muted :style="{ opacity: opacityIndex == index ? 1 : 0 }"></video>
+        <video v-for="(n, index) in videoList" :key="index" :src="`/img/character/yh_bgv_${n}.mp4`" autoplay loop muted
+            :style="{ opacity: opacityIndex == index ? 1 : 0 }"></video>
         <div class="characterTitle" :style="{ opacity: isOpacity ? 1 : 0 }">
             <span></span>
         </div>
         <div class="characterInfo" :style="{ opacity: isOpacity ? 1 : 0 }">
-            <img class="characterName" :src="`/fakeYH/img/character/${currentRole.name}`" alt="">
+            <img class="characterName" :src="`/img/character/${currentRole.name}`" alt="">
             <div class="characterdetail"
-                :style="{ background: `url('/fakeYH/img/character/${currentRole.info1}') no-repeat` }">
+                :style="{ background: `url('/img/character/${currentRole.info1}') no-repeat` }">
                 <div class="characterSelf" @mouseenter="switchDes1" @mouseleave="switchDes2">
                     <p v-for="(n, index) in currentRole.info2" :key="index">{{ n }}</p>
                 </div>
@@ -17,7 +17,7 @@
                 <div class="roleDesSwitch" :style="{ backgroundPosition: bgPosition }"></div>
             </div>
             <div class="characterList">
-                <img v-for="(item, index) in roleList" :src="`/fakeYH/img/character/role_bullet${index + 1}.png`" alt=""
+                <img v-for="(item, index) in roleList" :src="`/img/character/role_bullet${index + 1}.png`" alt=""
                     :class="{ active: activeIndex == index }" @click="toggleRole(index)">
             </div>
         </div>

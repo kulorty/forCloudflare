@@ -14,11 +14,12 @@
 </template>
 
 <script setup>
-import Loading from "./components/Loading.vue";
+import Loading from "./components/Loading.vue"
 import Header from "./components/Header.vue"
 import Home from "./components/Home.vue"
 import Character from "./components/Character.vue";
 import City from "./components/City.vue";
+
 import gsap from "gsap";
 import { inject, ref, onMounted } from "vue";
 

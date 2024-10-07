@@ -10,13 +10,13 @@
             <div class="loadText">
                 <div class="textDark">
                     <div v-for="(n, index) in textDarks" :key="index"
-                        :style="{ backgroundImage: `url('/fakeYH/img/loading/${n}'`, animationDelay: (index * .2) + 's' }"
+                        :style="{ backgroundImage: `url('/img/loading/${n}'`, animationDelay: (index * .2) + 's' }"
                         class="animation">
                     </div>
                 </div>
                 <div class="textLight">
                     <div v-for="(n, index) in textLights" :key="index"
-                        :style="{ backgroundImage: `url('/fakeYH/img/loading/${n}'`, animationDelay: (index * .2) + 's' }"
+                        :style="{ backgroundImage: `url('/img/loading/${n}'`, animationDelay: (index * .2) + 's' }"
                         :class="{ animation: delaied }">
                     </div>
                 </div>
