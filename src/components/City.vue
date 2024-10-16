@@ -1,8 +1,15 @@
 <template>
     <div class="city">
-        <div class="tape" :style="{ backgroundPosition: currentSlideId <= 1 ? `top` : `bottom` }">
-            <div class="cogs" :style="{ backgroundPosition: currentSlideId <= 1 ? `top` : `bottom` }"></div>
-            <div class="cogs" :style="{ backgroundPosition: currentSlideId <= 1 ? `top` : `bottom` }"></div>
+        <div class="tapeAnimate">
+            <div class="tapeAnimate1"></div>
+            <div class="tapeAnimate2"></div>
+            <div class="tapeAnimate3"></div>
+        </div>
+        <div class="tape" :style="{ transform: currentSlideId <= 1 ? `rotateY(0)` : `rotateY(180deg)` }">
+            <div class="cogs" :style="{ backgroundPosition: positionValue }"></div>
+            <div class="cogs" :style="{ backgroundPosition: positionValue }"></div>
+            <div class="tapeA" :style="{ opacity: currentSlideId <= 1 ? 1 : 0 }"></div>
+            <div class="tapeB" :style="{ opacity: currentSlideId <= 1 ? 0 : 1 }"></div>
         </div>
         <div class="tapeOrnament1"
             :style="{ background: currentSlideId <= 1 ? `url('/img/city/tapeA_ornament1.png') no-repeat` : `url('/img/city/tapeB_ornament1.png') no-repeat` }">
@@ -55,7 +62,7 @@
 import { ref, computed, onMounted, inject } from 'vue';
 import gsap from 'gsap';
 
-const slideSignal = Array(5).fill(""), currentSlideId = ref(0), isOpacity = ref(true), emitter = inject("emitter")
+const slideSignal = Array(5).fill(""), currentSlideId = ref(0), isOpacity = ref(true), emitter = inject("emitter"), positionValue = ref("top")
 const cityContents = ref({
     0: {
         title: "citySlide1Tit.png",
@@ -97,32 +104,55 @@ const toggleSlide = (val) => {
 }
 
 const prev = () => {
-    console.log('tet')
+
     if (currentSlideId.value > 0) {
         currentSlideId.value--
+
     } else {
         currentSlideId.value = 4
+
     }
+    rotate()
 }
 
 const next = () => {
     if (currentSlideId.value < 4) {
         currentSlideId.value++
+
     } else {
         currentSlideId.value = 0
+
+    }
+    rotate()
+}
+
+const rotate = () => {
+    if (currentSlideId.value <= 1) {
+        setTimeout(() => {
+            positionValue.value = "top"
+        }, 300)
+    } else {
+        setTimeout(() => {
+            positionValue.value = "bottom"
+        }, 300)
     }
 }
 
 onMounted(() => {
     emitter.on("toIndex", val => {
         if (val == 2) {
-            gsap.fromTo(".tape", { x: -100 + "vw", }, { keyframes: [{ x: 80, duration: .3 }, { x: 0, duration: .1 }, { x: 80, duration: .1 }, { x: 0, duration: .1 }] })
+            gsap.fromTo(".b1", { x: 0 }, { keyframes: [{ x: -80, opacity: 1, duration: .6 }, { opacity: 0 }] })
+            gsap.fromTo(".b2", { x: 0 }, { keyframes: [{ x: -140, opacity: 1, duration: .6 }, { opacity: 0 }] })
+            gsap.fromTo(".tape", { left: -100 + "vw", }, { keyframes: [{ left: 10 + "vw", duration: .3, delay: .5 }, { left: 0 + "vw", duration: .1 }, { left: 10 + "vw", duration: .1 }, { left: 0 + "vw", duration: .1 }] })
+            gsap.fromTo(".tapeAnimate1", { x: -100 + "vw", }, { keyframes: [{ x: 20, duration: .5, delay: .5 }, { x: -20 + "vw", duration: .2, delay: .2 }] })
+            gsap.fromTo(".tapeAnimate2", { x: -100 + "vw", }, { keyframes: [{ x: 50, duration: .5, delay: .5 }, { x: -20 + "vw", duration: .2, delay: .2 }] })
+            gsap.fromTo(".tapeAnimate3", { x: -100 + "vw", }, { keyframes: [{ x: 80, duration: .5, delay: .5 }, { x: -20 + "vw", duration: .2, delay: .2 }] })
             gsap.fromTo(".guide", { x: 100 + "vw", }, { x: 0, duration: .6, delay: 1.2 })
-            gsap.fromTo(".guide", { x: 100 + "vw", }, { x: 0, duration: .6, delay: 1.2 })
-            gsap.fromTo(".slideContent", { x: 100 + "vw", }, { x: 0, duration: .6, delay: 1.1 })
+            gsap.fromTo(".tapeOrnament1", { x: 100 + "vw", }, { x: 0, duration: .6, delay: 1.3 })
+            gsap.fromTo(".tapeOrnament2", { x: 100 + "vw", }, { x: 0, duration: .6, delay: 1.4 })
+            gsap.fromTo(".nextPage", { x: 100 + "vw", }, { x: 0, duration: .6, delay: 1.7 })
+            gsap.fromTo(".slideContent", { x: 100 + "vw", }, { x: 0, duration: .6, delay: 1.2 })
             gsap.fromTo(".cityNum", { x: 100 + "vw", }, { x: 0, duration: .6, delay: 1.1 })
-            gsap.to(".b1", { keyframes: [{ x: -30 + "rem", opacity: 1, duration: 1 }, { x: -30 + "rem", opacity: 0 }] })
-            gsap.to(".b2", { keyframes: [{ x: -10 + "rem", opacity: 1, duration: 1 }, { x: -10 + "rem", opacity: 0 }] })
         }
     })
 })
@@ -151,27 +181,74 @@ onMounted(() => {
     height: calc(100vh - 4.8rem);
     transition: opacity .4s ease-in-out;
 
+    .tapeAnimate {
+
+        div {
+            position: absolute;
+            height: 22rem;
+            width: 14rem;
+            top: 6rem;
+        }
+
+        div:nth-child(1) {
+            left: 60rem;
+            background: url("/img/city/tapeAnimateT1.png") no-repeat;
+            background-size: auto 100%;
+        }
+
+        div:nth-child(2) {
+            left: 62rem;
+            background: url("/img/city/tapeAnimateT2.png") no-repeat;
+            background-size: auto 100%;
+        }
+
+        div:nth-child(3) {
+            left: 64rem;
+            background: url("/img/city/tapeAnimateT3.png") no-repeat;
+            background-size: auto 100%;
+        }
+    }
+
     .tape {
         margin: 1.4rem 0 0 12rem;
-        background: url("/img/city/tape.png") no-repeat;
         width: 50rem;
         height: 30.2rem;
-        background-size: cover;
         position: relative;
         z-index: 0;
+        transition: transform .6s linear;
+
+        .tapeA,
+        .tapeB {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 3;
+            width: inherit;
+            height: inherit;
+            background: url("/img/city/tape.png") no-repeat;
+            background-size: cover;
+            background-position: top;
+            transition: opacity .3s linear;
+        }
+
+        .tapeB {
+            transform: rotateY(180deg);
+            background-position: bottom;
+        }
 
         .cogs {
             position: absolute;
             background: url("/img/city/tapeAxle.png");
             animation: rotate 4s linear infinite;
             width: 8rem;
+            z-index: 4;
             height: 8rem;
             background-position: top;
             background-size: cover;
         }
 
         .cogs:nth-child(1) {
-            left: 8.6rem;
+            left: 8.3rem;
             top: 9.5rem
         }
 
